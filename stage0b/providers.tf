@@ -10,7 +10,7 @@ terraform {
     resource_group_name  = "prutfinitrg"
     storage_account_name = "prutfinitsa"
     container_name       = "tfstate"
-    key                  = "bootstrap.tfstate"
+    key                  = "stage0b.tfstate"
   }
 }
 
