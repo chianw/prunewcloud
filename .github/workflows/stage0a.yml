@@ -6,7 +6,7 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  create-management-subscription:
+  create-subscription-sa:
     environment: bootstrap
     runs-on: ubuntu-latest
     steps:

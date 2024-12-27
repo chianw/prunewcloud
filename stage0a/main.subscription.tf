@@ -9,7 +9,7 @@ data "azurerm_billing_mca_account_scope" "example" {
 
 # create management subscription
 resource "azurerm_subscription" "example" {
-  subscription_name = "management"
+  subscription_name = "prumgt"
   billing_scope_id  = data.azurerm_billing_mca_account_scope.example.id
   tags              = var.tags
 }
