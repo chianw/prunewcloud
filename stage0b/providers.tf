@@ -25,4 +25,5 @@ provider "azurerm" {
   alias           = "mgt"
   subscription_id = data.terraform_remote_state.stage0a_output.outputs.subscription_id
   features {}
+  use_oidc = true
 }
