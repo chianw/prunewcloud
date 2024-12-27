@@ -8,6 +8,11 @@ permissions:
 jobs:
   create-subscription:
     environment: bootstrap
+    env:
+      TF_VAR_billing_account_name: ${{ secrets.BILLING_ACCOUNT_NAME}}
+      TF_VAR_billing_profile_name: ${{ secrets.BILLING_PROFILE_NAME }}
+      TF_VAR_invoice_section_name: ${{ secrets.INVOICE_SECTION_NAME }}
+      TF_VAR_subscription_name: ${{ secrets.SUBSCRIPTION_NAME }}
     runs-on: ubuntu-latest
     steps:
       - name: Azure login

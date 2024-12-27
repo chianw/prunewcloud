@@ -1,8 +1,8 @@
 # subscription id to use for terraform plan and apply
-variable "subscription_id" {
-  description = "The subscription ID to use for terraform plan and apply"
-  type        = string
-}
+# variable "subscription_id" {
+#   description = "The subscription ID to use for terraform plan and apply"
+#   type        = string
+# }
 
 variable "billing_account_name" {
   description = "The billing account name or billing account id"
