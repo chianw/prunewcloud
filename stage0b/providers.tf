@@ -10,7 +10,7 @@ terraform {
     resource_group_name  = "prutfinitrg"
     storage_account_name = "prutfinitsa"
     container_name       = "tfstate"
-    key                  = "stage0a.tfstate"
+    key                  = "bootstrap.tfstate"
   }
 }
 
@@ -19,4 +19,10 @@ provider "azurerm" {
   features {}
   #   subscription_id = var.subscription_id
   use_oidc = true
+}
+
+provider "azurerm" {
+  alias           = "mgt"
+  subscription_id = data.terraform_remote_state.stage0a_output.outputs.subscription_id
+  features {}
 }

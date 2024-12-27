@@ -1,4 +1,4 @@
-name: Create new management subscription
+name: Create ESLZ tfstate storage account on mgt subscription
 on:
   workflow_dispatch:
 
@@ -39,7 +39,7 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_USE_OIDC: true
         run: |
-          cd stage0a
+          cd stage0b
           terraform init
 
       - name: Terraform plan
@@ -49,7 +49,7 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_USE_OIDC: true
         run: |
-          cd stage0a
+          cd stage0b
           terraform plan -out apply.tfplan
     
       - name: Terraform apply
@@ -59,6 +59,6 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_USE_OIDC: true
         run: |
-          cd stage0a
+          cd stage0b
           terraform apply apply.tfplan
   
