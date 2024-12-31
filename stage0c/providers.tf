@@ -35,3 +35,7 @@ provider "azurerm" {
   features {}
   use_oidc = true
 }
+
+provider "github" {
+  owner = var.organization_name
+}

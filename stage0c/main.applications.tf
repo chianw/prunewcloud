@@ -23,7 +23,7 @@ data "terraform_remote_state" "stage0b_output" {
 
 # create ESLZ app registration
 resource "azuread_application" "this" {
-  display_name = "prueslz-${var.github_repository_name}"
+  display_name = "prunceslz"
 }
 
 # create ESLZ service principal
@@ -44,23 +44,26 @@ resource "azurerm_role_assignment" "this" {
 
 
 data "github_repository" "this" {
-  name = var.github_repository_name
+  name = var.repository_name
 }
 
-resource "github_actions_secret" "azure_client_id" {
+resource "github_actions_environment_secret" "azure_client_id" {
   repository      = data.github_repository.this.name
+  environment     = var.environment
   secret_name     = "AZURE_CLIENT_ID"
   plaintext_value = azuread_application.this.client_id
 }
 
-resource "github_actions_secret" "azure_tenant_id" {
+resource "github_actions_environment_secret" "azure_tenant_id" {
   repository      = data.github_repository.this.name
+  environment     = var.environment
   secret_name     = "AZURE_TENANT_ID"
   plaintext_value = data.azurerm_subscription.current.tenant_id
 }
 
-resource "github_actions_secret" "azure_subscription_id" {
+resource "github_actions_environment_secret" "azure_subscription_id" {
   repository      = data.github_repository.this.name
+  environment     = var.environment
   secret_name     = "AZURE_SUBSCRIPTION_ID"
   plaintext_value = data.terraform_remote_state.stage0a_output.outputs.conn_subscription_id
 }
@@ -69,11 +72,11 @@ resource "github_actions_secret" "azure_subscription_id" {
 
 
 resource "azuread_application_federated_identity_credential" "environments" {
-  for_each       = toset(var.environments)
+  for_each       = toset(var.environment)
   application_id = "/applications/${azuread_application.this.object_id}"
-  display_name   = "github-${var.github_organization_name}.${var.github_repository_name}-${each.value}"
+  display_name   = "github-${var.organization_name}.${var.repository_name}-${each.value}"
   description    = "GitHub federated identity credentials"
-  subject        = "repo:${var.github_organization_name}/${var.github_repository_name}:environment:${each.value}"
+  subject        = "repo:${var.organization_name}/${var.repository_name}:environment:${each.value}"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
 }
