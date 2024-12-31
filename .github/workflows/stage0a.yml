@@ -1,4 +1,4 @@
-name: Create new management subscription
+name: Create new management and connectivity subscription
 on:
   workflow_dispatch:
 
@@ -6,7 +6,7 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  create-subscription:
+  create-subscriptions:
     environment: bootstrap
     env:
       TF_VAR_billing_account_name: ${{ secrets.BILLING_ACCOUNT_NAME}}
