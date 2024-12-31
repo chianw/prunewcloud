@@ -11,8 +11,8 @@ jobs:
     env:
       TF_VAR_organization_name: ${{ secrets.ENVIRONMENTS}}
       TF_VAR_repository_name: ${{ secrets.REPOSITORY_NAME }}
-      TF_VAR_azure_role: ${{ secrets.AZURE_ROLE }}
-      TF_VAR_environment: ${{ secrets.ENVIRONMENT }}    
+      TF_VAR_azure_roles: ${{ secrets.AZURE_ROLES }}
+      TF_VAR_environments: ${{ secrets.ENVIRONMENTS }}    
     runs-on: ubuntu-latest
     steps:
       - name: Azure login

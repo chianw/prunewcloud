@@ -34,7 +34,7 @@ resource "azuread_service_principal" "this" {
 
 # assign roles to ESLZ service principal for connectivity subscription
 resource "azurerm_role_assignment" "this" {
-  for_each                         = toset(var.azure_role)
+  for_each                         = toset(var.azure_roles)
   scope                            = data.terraform_remote_state.stage0a_output.outputs.conn_subscription_id
   principal_id                     = azuread_service_principal.this.object_id
   principal_type                   = "ServicePrincipal"
@@ -49,21 +49,21 @@ data "github_repository" "this" {
 
 resource "github_actions_environment_secret" "azure_client_id" {
   repository      = data.github_repository.this.name
-  environment     = var.environment
+  environment     = var.environments[0]
   secret_name     = "AZURE_CLIENT_ID"
   plaintext_value = azuread_application.this.client_id
 }
 
 resource "github_actions_environment_secret" "azure_tenant_id" {
   repository      = data.github_repository.this.name
-  environment     = var.environment
+  environment     = var.environments[0]
   secret_name     = "AZURE_TENANT_ID"
   plaintext_value = data.azurerm_subscription.current.tenant_id
 }
 
 resource "github_actions_environment_secret" "azure_subscription_id" {
   repository      = data.github_repository.this.name
-  environment     = var.environment
+  environment     = var.environments[0]
   secret_name     = "AZURE_SUBSCRIPTION_ID"
   plaintext_value = data.terraform_remote_state.stage0a_output.outputs.conn_subscription_id
 }
@@ -72,7 +72,7 @@ resource "github_actions_environment_secret" "azure_subscription_id" {
 
 
 resource "azuread_application_federated_identity_credential" "environments" {
-  for_each       = toset(var.environment)
+  for_each       = toset(var.environments)
   application_id = "/applications/${azuread_application.this.object_id}"
   display_name   = "github-${var.organization_name}.${var.repository_name}-${each.value}"
   description    = "GitHub federated identity credentials"
