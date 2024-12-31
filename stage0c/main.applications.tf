@@ -34,7 +34,7 @@ resource "azuread_service_principal" "this" {
 
 # assign roles to ESLZ service principal for connectivity subscription
 resource "azurerm_role_assignment" "this" {
-  for_each                         = toset(var.azure_roles)
+  for_each                         = toset(var.azure_role)
   scope                            = data.terraform_remote_state.stage0a_output.outputs.conn_subscription_id
   principal_id                     = azuread_service_principal.this.object_id
   principal_type                   = "ServicePrincipal"

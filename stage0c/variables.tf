@@ -8,15 +8,14 @@ variable "repository_name" {
   type        = string
 }
 
-variable "azure_roles" {
-  description = "Which roles to assign to the workload identity in Azure?"
-  type        = list(string)
+variable "azure_role" {
+  description = "Which role to assign to the workload identity in Azure?"
+  type        = string
 }
 
 variable "environment" {
   description = "The GitHub environments to add as subject identifiers"
   type        = string
-  default     = ""
 }
 
 variable "pull_request" {
