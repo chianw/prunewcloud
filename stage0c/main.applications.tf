@@ -21,6 +21,9 @@ data "terraform_remote_state" "stage0b_output" {
   }
 }
 
+data "azurerm_client_config" "current" {
+}
+
 # create ESLZ app registration
 resource "azuread_application" "this" {
   display_name = "prunceslz"
@@ -58,7 +61,7 @@ resource "github_actions_environment_secret" "azure_tenant_id" {
   repository      = data.github_repository.this.name
   environment     = var.environments[0]
   secret_name     = "AZURE_TENANT_ID"
-  plaintext_value = data.azurerm_subscription.current.tenant_id
+  plaintext_value = data.azurerm_client_config.current.tenant_id
 }
 
 resource "github_actions_environment_secret" "azure_subscription_id" {
