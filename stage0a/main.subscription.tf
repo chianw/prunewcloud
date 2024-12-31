@@ -13,3 +13,10 @@ resource "azurerm_subscription" "example" {
   billing_scope_id  = data.azurerm_billing_mca_account_scope.example.id
   tags              = var.tags
 }
+
+# create connectivity subscription
+resource "azurerm_subscription" "conn_subscription" {
+  subscription_name = "pruconn"
+  billing_scope_id  = data.azurerm_billing_mca_account_scope.example.id
+  tags              = var.tags
+}
