@@ -23,3 +23,18 @@ variable "pull_request" {
   type        = bool
   default     = false
 }
+
+variable "app_id" {
+  description = "GitHub App ID"
+  type        = string
+}
+
+variable "app_installation_id" {
+  description = "GitHub App Installation ID"
+  type        = string
+}
+
+variable "app_pem_file" {
+  description = "Path to the GitHub App PEM file"
+  type        = string
+}
