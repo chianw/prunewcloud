@@ -45,6 +45,16 @@ resource "azurerm_role_assignment" "this" {
   skip_service_principal_aad_check = true
 }
 
+# assign Reader and Data Access role to ESLZ service principal for storage account in management subscription required to listKeys
+resource "azurerm_role_assignment" "storage_data_reader" {
+  scope                            = data.terraform_remote_state.stage0b_output.outputs.storage_account_id
+  principal_id                     = azuread_service_principal.this.object_id
+  principal_type                   = "ServicePrincipal"
+  role_definition_name             = "Reader and Data Access"
+  skip_service_principal_aad_check = true
+}
+
+
 # assign Storage Blob Data Contributor role to ESLZ service principal for storage account in management subscription
 resource "azurerm_role_assignment" "blob_data_contributor" {
   scope                            = data.terraform_remote_state.stage0b_output.outputs.storage_account_id
