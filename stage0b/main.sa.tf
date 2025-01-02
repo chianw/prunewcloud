@@ -26,6 +26,7 @@ resource "azurerm_storage_account" "example" {
 }
 
 resource "azurerm_storage_container" "example" {
+  provider           = azurerm.mgt
   name               = "tfstate"
   storage_account_id = azurerm_storage_account.example.id
 }
