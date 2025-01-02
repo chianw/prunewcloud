@@ -38,4 +38,5 @@ provider "azurerm" {
 
 provider "github" {
   owner = var.organization_name
+  app_auth {}
 }
