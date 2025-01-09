@@ -1,11 +1,13 @@
 ## Stage 0 initial bootstrap
-This is the initial bootstrap stage for MCA account. **It has to be adjusted for EA**:
+This is the initial bootstrap stage for MCA account. **It has to be adjusted for EA especially in terms of permissions**:
 
 **Pre-requisites**
 1. Initial subscription with a storage account and container. The storage account container will contain the tfstate for:
     - management subscription
-    - storage account for ESLZ
-    - service principal B(ESLZ) and C(subscription vending)
+    - connectivity subscription
+    - storage account for ESLZ. Optional app-config(roadmap)
+    - service principal B(ESLZ)
+    - service principal C(subscription vending, roadmap item)
 
 2. Github with Entra Workload ID Federation using a Service Principal A that has required permissions to create MCA subscription, storage account, additional service principals with role assignments. 
 
@@ -27,13 +29,13 @@ The service principal should also have **Application Administrator** permissions
 
 **stage0a - using Terraform with existing service principal A with required permissions**
 
-1. create an EA subscription for management and for connectivity - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subscription and https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/create-enterprise-subscription#create-an-ea-subscription . For permissions to create subscriptions for MCA - https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/create-subscription#permission-required-to-create-azure-subscriptions 
+1. create a MCA subscription for management and for connectivity. For permissions to create subscriptions for MCA - https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/create-subscription#permission-required-to-create-azure-subscriptions . For permissions to create subscription for EA - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subscription and https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/create-enterprise-subscription#create-an-ea-subscription . 
 
 ---
 
 **stage0b - create storage account to store ESLZ tfstate**
 
-2. create a storage account and optional app config for ESLZ tfstate in the management subscription
+2. create a storage account for ESLZ tfstate in the management subscription. Optionally create app-config for to share tfstate data across stages instead of allowing access to tfstate directly (roadmap). Service principal A will have permissions to do this since it is the owner of management subscription.
 
 ---
 
@@ -43,7 +45,7 @@ The service principal should also have **Application Administrator** permissions
 
 4. add AZURE_CLIENT_ID with service principal B, AZURE_SUBSCRIPTION_ID with connectivity subscription, and AZURE_TENANT_ID as environment secrets to the existing ESLZ repository's environment "eslz"
 
-5. create service principal C with permissions to use subscription vending
+5. create service principal C with permissions to use subscription vending (roadmap)
 
 ---
 
