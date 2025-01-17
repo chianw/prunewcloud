@@ -35,7 +35,18 @@ resource "azuread_service_principal" "this" {
 }
 
 
-# assign roles to ESLZ service principal for connectivity subscription
+# assign Management Group Contributor, Management Group Reader, Hierarchy Settings Administrator to ESLZ service principal at tenant root group
+resource "azurerm_role_assignment" "mgt_group_role_assignments" {
+  for_each                         = toset(var.mgt_group_roles)
+  scope                            = "/providers/Microsoft.Management/managementGroups/Tenant Root Group"
+  principal_id                     = azuread_service_principal.this.object_id
+  principal_type                   = "ServicePrincipal"
+  role_definition_name             = each.value
+  skip_service_principal_aad_check = true
+}
+
+
+# assign Contributor role to ESLZ service principal for connectivity subscription
 resource "azurerm_role_assignment" "this" {
   for_each                         = toset(var.azure_roles)
   scope                            = "/subscriptions/${data.terraform_remote_state.stage0a_output.outputs.conn_subscription_id}"

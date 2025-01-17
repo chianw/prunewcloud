@@ -13,6 +13,11 @@ variable "azure_roles" {
   type        = list(string)
 }
 
+variable "mgt_group_roles" {
+  description = "Which role to assign to the workload identity in the management group?"
+  type        = list(string)
+}
+
 variable "environments" {
   description = "The GitHub environments to add as subject identifiers"
   type        = list(string)
