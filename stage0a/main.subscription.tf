@@ -21,7 +21,7 @@ resource "azurerm_subscription" "conn_subscription" {
   tags              = var.tags
 }
 
-
+/*
 # create subscription vending app registration
 resource "azuread_application" "subvending" {
   display_name = "pruncsubvending"
@@ -41,3 +41,4 @@ resource "azurerm_role_assignment" "subvending" {
   role_definition_name             = "Contributor"
   skip_service_principal_aad_check = true
 }
+*/
