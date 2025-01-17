@@ -24,6 +24,11 @@ data "terraform_remote_state" "stage0b_output" {
 data "azurerm_client_config" "current" {
 }
 
+# ID of tenant root group
+data "azurerm_management_group" "root" {
+  name = "45794f26-9e1d-4849-aa49-601317b98dc1"
+}
+
 # create ESLZ app registration
 resource "azuread_application" "this" {
   display_name = "prunceslz"
@@ -38,7 +43,7 @@ resource "azuread_service_principal" "this" {
 # assign Management Group Contributor, Management Group Reader, Hierarchy Settings Administrator to ESLZ service principal at tenant root group
 resource "azurerm_role_assignment" "mgt_group_role_assignments" {
   for_each                         = toset(var.mgt_group_roles)
-  scope                            = "/providers/Microsoft.Management/managementGroups/Tenant Root Group"
+  scope                            = data.azurerm_management_group.root.id
   principal_id                     = azuread_service_principal.this.object_id
   principal_type                   = "ServicePrincipal"
   role_definition_name             = each.value
