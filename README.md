@@ -24,6 +24,10 @@ The service principal should also have **Application Administrator** permissions
 
 ![appadminrole](./stage0a/images/appadminrole.png "App Admin Role")
 
+The service principal should have **Role Based Access Control Administrator** at tenant root group so as to be able to assign roles to ESLZ service principal created later
+
+![rolebasedpermission](./stage0a/images/rolebasedpermission.png "Role Based Access Control Administrator")
+
 
 ---
 
@@ -42,6 +46,20 @@ The service principal should also have **Application Administrator** permissions
 **stage0c - create additional service principals**
 
 3. create service principal B with permissions to create entire ESLZ
+
+ESLZ service principal permissions on Tenant Root Group
+
+![tenantrootpermissions](./stage0a/images/tenantrootpermissions.png "Permissions of ESLZ service principal on tenant root group")
+
+
+ESLZ service principal permissions on connectivity subscription
+
+![connsubpermissions](./stage0a/images/connsubpermissions.png "Permissions of ESLZ service principal on connectivity subscription")
+
+
+ESLZ service principal permissions on tfstate storage account
+
+![sapermissions](./stage0a/images/sapermissions.png "Permissions of ESLZ service principal on storage account for tfstate")
 
 4. add AZURE_CLIENT_ID with service principal B, AZURE_SUBSCRIPTION_ID with connectivity subscription, and AZURE_TENANT_ID as environment secrets to the existing ESLZ repository's environment "eslz"
 
