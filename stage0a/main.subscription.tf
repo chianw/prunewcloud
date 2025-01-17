@@ -34,7 +34,8 @@ resource "azuread_service_principal" "subvending" {
 
 # assign Contributor role for subscription vending service principal to billing account
 resource "azurerm_role_assignment" "subvending" {
-  scope                            = "/providers/Microsoft.Billing/billingAccounts/${var.billing_account_name}" 
+  # scope                            = "/providers/Microsoft.Billing/billingAccounts/${var.billing_account_name}" 
+  scope                            = data.azurerm_billing_mca_account_scope.example.id
   principal_id                     = azuread_service_principal.subvending.object_id
   principal_type                   = "ServicePrincipal"
   role_definition_name             = "Contributor"
