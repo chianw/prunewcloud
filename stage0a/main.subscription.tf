@@ -20,3 +20,23 @@ resource "azurerm_subscription" "conn_subscription" {
   billing_scope_id  = data.azurerm_billing_mca_account_scope.example.id
   tags              = var.tags
 }
+
+
+# create subscription vending app registration
+resource "azuread_application" "subvending" {
+  display_name = "pruncsubvending"
+}
+
+# create subscription vending service principal
+resource "azuread_service_principal" "subvending" {
+  client_id = azuread_application.subvending.client_id
+}
+
+# assign Contributor role for subscription vending service principal to billing account
+resource "azurerm_role_assignment" "subvending" {
+  scope                            = data.azurerm_billing_mca_account_scope.example.id
+  principal_id                     = azuread_service_principal.subvending.object_id
+  principal_type                   = "ServicePrincipal"
+  role_definition_name             = "Contributor"
+  skip_service_principal_aad_check = true
+}
