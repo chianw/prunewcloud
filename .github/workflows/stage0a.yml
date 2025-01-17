@@ -1,4 +1,4 @@
-name: Create new management and connectivity subscription
+name: Create new management and connectivity subscription and subscription vending principal
 on:
   workflow_dispatch:
 
