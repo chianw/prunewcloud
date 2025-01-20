@@ -40,7 +40,7 @@ resource "azuread_service_principal" "this" {
 }
 
 
-# assign Management Group Contributor, Management Group Reader, Hierarchy Settings Administrator, Resource Policy Contributor to ESLZ service principal at tenant root group
+# assign Management Group Contributor, Management Group Reader, Hierarchy Settings Administrator, Resource Policy Contributor, Role Based Access Control Administrator to ESLZ service principal at tenant root group
 resource "azurerm_role_assignment" "mgt_group_role_assignments" {
   for_each                         = toset(var.mgt_group_roles)
   scope                            = data.azurerm_management_group.root.id

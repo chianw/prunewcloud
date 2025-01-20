@@ -16,7 +16,7 @@ variable "azure_roles" {
 }
 
 # assign Management Group Contributor, Management Group Reader, Hierarchy Settings Administrator, Resource Policy Contributor to ESLZ service principal at tenant root group
-# in GH the secret will be defined as mgt_group_roles = ["Management Group Contributor", "Management Group Reader", "Hierarchy Settings Administrator", "Resource Policy Contributor"]
+# in GH the secret will be defined as mgt_group_roles = ["Management Group Contributor", "Management Group Reader", "Hierarchy Settings Administrator", "Resource Policy Contributor","Role Based Access Control Administrator"]
 variable "mgt_group_roles" {
   description = "Which role to assign to the workload identity in the management group?"
   type        = list(string)
