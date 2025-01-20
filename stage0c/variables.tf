@@ -8,6 +8,8 @@ variable "repository_name" {
   type        = string
 }
 
+# assign Contributor role to ESLZ service principal for connectivity subscription
+# in GH the secret is defined as azure_roles = ["Contributor"]
 variable "azure_roles" {
   description = "Which role to assign to the workload identity in Azure?"
   type        = list(string)
