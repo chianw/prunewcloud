@@ -82,7 +82,7 @@ resource "azurerm_role_assignment" "blob_data_contributor" {
 
 
 # assign Reader and Data Access role to ESLZ service principal for bootstrap storage account in management subscription required to listKeys
-resource "azurerm_role_assignment" "storage_data_reader" {
+resource "azurerm_role_assignment" "boot_storage_data_reader" {
   scope                            = "/subscriptions/ad6f62ba-74ae-4f03-8123-5431c364621d/resourceGroups/prutfinitrg/providers/Microsoft.Storage/storageAccounts/prutfinitsa"
   principal_id                     = azuread_service_principal.this.object_id
   principal_type                   = "ServicePrincipal"
@@ -92,7 +92,7 @@ resource "azurerm_role_assignment" "storage_data_reader" {
 
 
 # assign Storage Blob Data Contributor role to ESLZ service principal for bootstrap storage account in management subscription
-resource "azurerm_role_assignment" "blob_data_contributor" {
+resource "azurerm_role_assignment" "boot_blob_data_contributor" {
   scope                            = "/subscriptions/ad6f62ba-74ae-4f03-8123-5431c364621d/resourceGroups/prutfinitrg/providers/Microsoft.Storage/storageAccounts/prutfinitsa"
   principal_id                     = azuread_service_principal.this.object_id
   principal_type                   = "ServicePrincipal"
