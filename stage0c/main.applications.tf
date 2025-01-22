@@ -167,9 +167,9 @@ resource "github_actions_environment_secret" "vwanazure_subscription_id" {
 // create federated identity credentials for ESLZ repo
 resource "azuread_application_federated_identity_credential" "eslz_environment" {
   application_id = "/applications/${azuread_application.this.object_id}"
-  display_name   = "prunc${environments[0]}"
+  display_name   = "prunc${var.environments[0]}"
   description    = "GitHub federated identity credentials"
-  subject        = "repo:${var.organization_name}/${var.repository_name}:environment:${environments[0]}"
+  subject        = "repo:${var.organization_name}/${var.repository_name}:environment:${var.environments[0]}"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
 }
@@ -178,9 +178,9 @@ resource "azuread_application_federated_identity_credential" "eslz_environment" 
 // create federated identity credentials for VWAN repo
 resource "azuread_application_federated_identity_credential" "vwan_environment" {
   application_id = "/applications/${azuread_application.this.object_id}"
-  display_name   = "prunc${environments[1]}"
+  display_name   = "prunc${var.environments[1]}"
   description    = "GitHub federated identity credentials"
-  subject        = "repo:${var.organization_name}/${var.vwan_repository_name}:environment:${environments[1]}"
+  subject        = "repo:${var.organization_name}/${var.vwan_repository_name}:environment:${var.environments[1]}"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
 }

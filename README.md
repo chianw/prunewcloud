@@ -11,9 +11,9 @@ This is the initial bootstrap stage for MCA account. **It has to be adjusted for
 
 2. Github with Entra Workload ID Federation using a Service Principal A that has required permissions to create MCA subscription, storage account, additional service principals with role assignments. 
 
-3. Existing Github repository for ESLZ with an enviroment called "eslz". 
+3. Existing Github repository for ESLZ with an enviroment called "eslz", existing Github repository for VWAN with environment called "vwan"
 
-4. Existing Github app with permissions to ESLZ repository that can be used by Terraform to authenticate to GH and update environment secrets. See https://solideogloria.tech/terraform/authenticating-terraform-with-a-github-app/ and https://registry.terraform.io/providers/integrations/github/latest/docs#github-app-installation for details
+4. Existing Github app with permissions to ESLZ and VWAN repository that can be used by Terraform to authenticate to GH and update environment secrets. See https://solideogloria.tech/terraform/authenticating-terraform-with-a-github-app/ and https://registry.terraform.io/providers/integrations/github/latest/docs#github-app-installation for details
 
 
 For MCA, the service principal used for Github Workload ID federation should have **Contributor** permissions on the billing scope to be able to create subscriptions for MCA
