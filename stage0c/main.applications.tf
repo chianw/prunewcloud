@@ -101,11 +101,21 @@ resource "azurerm_role_assignment" "boot_blob_data_contributor" {
 }
 
 
+//TODO: refactor the below to avoid repetition
 
+
+// github repository for ESLZ
 data "github_repository" "this" {
   name = var.repository_name
 }
 
+// github repository for VWAN
+data "github_repository" "vwan" {
+  name = var.vwan_repository_name
+}
+
+
+// create GH secrets for ESLZ repo
 
 resource "github_actions_environment_secret" "azure_client_id" {
   repository      = var.repository_name
@@ -129,14 +139,50 @@ resource "github_actions_environment_secret" "azure_subscription_id" {
 }
 
 
+// create GH secrets for VWAN repo
+
+resource "github_actions_environment_secret" "vwanazure_client_id" {
+  repository      = var.vwan_repository_name
+  environment     = var.environments[1]
+  secret_name     = "AZURE_CLIENT_ID"
+  plaintext_value = azuread_application.this.client_id
+}
+
+resource "github_actions_environment_secret" "vwanazure_tenant_id" {
+  repository      = var.vwan_repository_name
+  environment     = var.environments[1]
+  secret_name     = "AZURE_TENANT_ID"
+  plaintext_value = data.azurerm_client_config.current.tenant_id
+}
+
+resource "github_actions_environment_secret" "vwanazure_subscription_id" {
+  repository      = var.vwan_repository_name
+  environment     = var.environments[1]
+  secret_name     = "AZURE_SUBSCRIPTION_ID"
+  plaintext_value = data.terraform_remote_state.stage0a_output.outputs.conn_subscription_id
+}
 
 
-resource "azuread_application_federated_identity_credential" "environments" {
-  for_each       = toset(var.environments)
+
+// create federated identity credentials for ESLZ repo
+resource "azuread_application_federated_identity_credential" "eslz_environment" {
   application_id = "/applications/${azuread_application.this.object_id}"
-  display_name   = "prunc${each.value}"
+  display_name   = "prunc${environments[0]}"
   description    = "GitHub federated identity credentials"
-  subject        = "repo:${var.organization_name}/${var.repository_name}:environment:${each.value}"
+  subject        = "repo:${var.organization_name}/${var.repository_name}:environment:${environments[0]}"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
 }
+
+
+// create federated identity credentials for VWAN repo
+resource "azuread_application_federated_identity_credential" "vwan_environment" {
+  application_id = "/applications/${azuread_application.this.object_id}"
+  display_name   = "prunc${environments[1]}"
+  description    = "GitHub federated identity credentials"
+  subject        = "repo:${var.organization_name}/${var.vwan_repository_name}:environment:${environments[1]}"
+  audiences      = ["api://AzureADTokenExchange"]
+  issuer         = "https://token.actions.githubusercontent.com"
+}
+
+

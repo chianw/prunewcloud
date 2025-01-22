@@ -4,9 +4,15 @@ variable "organization_name" {
 }
 
 variable "repository_name" {
-  description = "The GitHub repository to set up workload identity for"
+  description = "The GitHub ESLZ repository to set up workload identity for"
   type        = string
 }
+
+variable "vwan_repository_name" {
+  description = "The GitHub VWAN repository to set up workload identity for"
+  type        = string
+}
+
 
 # assign Contributor role to ESLZ service principal for connectivity subscription
 # in GH the secret is defined as azure_roles = ["Contributor"]
@@ -22,6 +28,7 @@ variable "mgt_group_roles" {
   type        = list(string)
 }
 
+# in GH the secret will be defined as environments = ["eslz", "vwan"]
 variable "environments" {
   description = "The GitHub environments to add as subject identifiers"
   type        = list(string)
